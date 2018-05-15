@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:j="http://xmlns.jcp.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+
+<h:body>
+	<ui:composition template="/WEB-INF/templates/base.xhtml">
+	
+		<ui:define name="title">Excel Exports</ui:define>
+		
+		<ui:define name="header">
+		    <h3>Exports Excel</h3>
+		</ui:define>
+		
+		<ui:define name="content">
+		<!-- <form j:id="mainForm"> -->
+			
+		<div class="row">
+			<div class="col-md-12">
+				<!-- <h:dataTable id="tblRows" value="#{expXlsCtrl.lineItems}" var="item" styleClass="dataTable">
+		            <h:column>
+		                <f:facet name="header">Id</f:facet>
+	                    #{item.id}
+	                </h:column>
+		            <h:column>
+		                <f:facet name="header">Product Name</f:facet>
+	                    #{item.productName}
+	                </h:column>
+		            <h:column>
+		                <f:facet name="header">Price</f:facet>
+	                    #{item.price}
+	                </h:column>
+		            <h:column>
+		                <f:facet name="header">Quantity</f:facet>
+	                    #{item.quantity}
+	                </h:column>
+		            <h:column>
+		                <f:facet name="header">Total</f:facet>
+		            </h:column>
+		        </h:dataTable> -->
+				<hr />
+	<!-- 			<div  j:id="zzz"> -->
+	<!-- 			<table id="tblRows" class="display compact"> -->
+				<table id="tblRows" class="table table-striped table-bordered">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Product Name</th>
+						<th>Price</th>
+						<th>Quantity</th>
+					</tr>
+				</thead>
+				<tbody>
+				<ui:repeat value="#{expXlsCtrl.lineItems}" var="item">
+					<tr>
+						<td>#{item.id}</td>
+						<td>#{item.productName}</td>
+						<td>#{item.price}</td>
+						<td>#{item.quantity }</td>
+					</tr>
+				</ui:repeat>
+				</tbody>
+				</table>
+				
+	<!-- 			</div> -->
+				<hr />
+			</div>
+		</div>
+	
+		<div class="form-inline">
+			<div class="row">
+				<div class="col-md-5">
+					<div class="form-group">
+						<div class="form-control">
+							<label>File extension to produce: </label>
+							<div class="radio-inline">
+								<h:selectOneRadio id="radXls" value="#{expXlsCtrl.radXls}" styleClass="jsfRadBtn">
+									<f:selectItem itemValue="xls" itemLabel="xls" />
+									<f:selectItem itemValue="xlsx" itemLabel="xlsx" />
+								</h:selectOneRadio>
+							</div>
+							<!-- <label class="radio-inline">
+								<input type="radio" p:name="radBtn" j:id="radBtnXls" j:value="xls" />xls
+							</label>
+							<label class="radio-inline">
+								<input type="radio" p:name="radBtn" j:id="radBtnXlsx" j:value="xlsx" checked="checked"/>xlsx
+								<f:viewParam name="radBtn" value="#{expXlsCtrl.radXls}" />
+							</label> -->
+						</div>
+						
+					</div>
+					<br clear="all" />
+				</div>
+				<div class="col-md-7">
+					<div class="text-right">
+						<div class="form-group">
+							<label>Number of rows to produce: </label>
+							<h:inputText  id="nbrRow" value="#{expXlsCtrl.nbrRow}" styleClass="form-control" pt:placeholder="Row">
+									<!-- <f:ajax listener="#{expXlsCtrl.changeRows}" render="zzz" /> -->
+							</h:inputText>
+							<input type="text" j:id="nbrRows" j:value="#{expXlsCtrl.nbrRow}" class="form-control" placeholder="Rows" />
+						</div>
+					</div>
+				</div>
+			</div>
+	
+			<br clear="all" />
+			<!-- row buttons -->
+			<div class="row">
+				<div class="col-md-6">
+					<h:commandButton styleClass="btn btn-success"
+						action="#{expXlsCtrl.createWB('createSomeFile')}" value="create wBook">
+					</h:commandButton>
+					&#160;
+					<h:commandButton styleClass="btn btn-info"
+						action="#{expXlsCtrl.jxlsExpTemplate('exportSomeFile')}" value="jxls Template">
+					</h:commandButton>
+					&#160;
+					<h:commandButton styleClass="btn btn-primary"
+						action="#{expXlsCtrl.createXSSFwb('createXSSFfile')}" value="create XSSF">
+					</h:commandButton>
+				</div>
+				<div class="col-md-6">
+					<div class="text-right">
+						<h:commandButton styleClass="btn btn-warning"
+							action="#{xlsStressCtrl.execStressTemp()}" value="execStressTemp">
+						</h:commandButton>
+						&#160;
+						<h:commandButton styleClass="btn btn-warning"
+							action="#{xlsStressCtrl.execStress()}" value="execStress">
+						</h:commandButton>
+						&#160;
+						<h:commandButton styleClass="btn btn-warning"
+							action="#{xlsStressCtrl.execStressPoi()}" value="execStressPoi">
+						</h:commandButton>
+					</div>
+				</div>
+			</div>
+	
+		</div>
+		<!-- </form> -->
+		</ui:define>
+		
+		<ui:define name="footer" />
+		
+		<ui:define name="customJS">
+			
+			<script type="text/javascript">
+			$(document).ready( function () {
+				expXLS.loadTbl($("#tblRows"));
+			} );
+			</script>
+		</ui:define>
+		
+	</ui:composition>
+
+</h:body>
+
+</html>

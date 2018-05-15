@@ -1,59 +1,85 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"> 
+<!DOCTYPE html>
+<html	
+	xmlns:f="http://xmlns.jcp.org/jsf/core"	
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+	
+<h:head></h:head>
 
-<h:head>
-<title>Sample JSF Application</title>
- <link href="css/site.css" rel="stylesheet" />
-</h:head> 
-<body> 
-<div class="main-container">
-        <div class="cloud-image">
-            <img src="img/successCloudNew.svg" />
-        </div>
-        <div class="content">
-            <div class="tweet-container">
-			<a href="http://twitter.com/intent/tweet/?text=I%20just%20created%20a%20new%20Java%20website%20on%20Azure%20using%20Azure%20DevOps%20Project&amp;hashtags=AzureDevOpsProject%2CVSTS%20%40Azure%20%40VSTS">
-                <img src="img/tweetThis.svg" />
-			</a>
-        </div>
-            <div class="content-body">
-                <div class="success-text">Success!</div>
-                <div class="description line-1"> Azure DevOps Project has been successfully setup</div>
-                <div class="description line-2"> <h:outputText value = "#{helloBean.message}" /></div>
-                <div class="next-steps-container">
-                    <div class="next-steps-header">Next up</div>
-                    <div class="next-steps-body">
-                        <div class="step">
-                            <div class="step-icon">
-                                <img src="img/cloneWhite.svg" />
-                            </div>
-                            <div class="step-text"><a href="https://go.microsoft.com/fwlink/?linkid=862409">Clone your code repository and start developing your application on IDE of your choice</a></div>
+<h:body>
+
+<ui:composition template="/WEB-INF/templates/baseLogin.xhtml">
+
+	<ui:define name="title">AzureJSF</ui:define>
+   
+	<ui:define name="topMenu" />
+   
+	<ui:define name="header" />
+
+	<ui:define name="content">
+      <!-- <p:focus for="usrPwd" /> -->
+         
+      <div class="container login">
+         <h:messages id="msgLogin" globalOnly="true" autoUpdate="true" styleClass="erreurMsg" />
+         <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+               <div class="login-panel panel panel-default">
+                  <div class="panel-heading">
+                     <h3 class="panel-title">Ouvrir une session</h3>
+                  </div>
+                  <div class="panel-body">
+                     <fieldset>
+                        
+                        <h:outputLabel for="usrName" value="Nom utilisateur" />
+                        <h:message id="msgName" for="usrName" errorClass="erreurMsg" />
+                        <div class="input-group">
+                           <span class="input-group-addon"><i class="fa fa-user fa-fw" /></span>
+                           <h:inputText id="usrName" name="usrName" class="form-control" required="true" 
+                                 pt:placeholder="Nom utilisateur" 
+                                 label="Nom utilisateur" 
+                                 value="#{indexPage.usrName}" />
                         </div>
-                        <div class="step">
-                            <div class="step-icon">
-                                <img src="img/deployWhite.svg" />
-                            </div>
-                            <div class="step-text"><a href="https://go.microsoft.com/fwlink/?linkid=862410">View your CI/CD pipeline on Visual Studio Team Services and customize it as per your needs</a></div>
+                        
+                        <div class="margB"></div>
+                        <h:outputLabel for="usrPwd" value="Mot de passe" />
+                        <h:message id="msgPwd" for="usrPwd" errorClass="erreurMsg" />
+                        <div class="input-group"> <!-- pt:autofocus="" -->
+                           <span class="input-group-addon"><i class="fa fa-key fa-fw" /></span>
+                           <h:inputSecret id="usrPwd" name="usrPwd" class="form-control" required="true"  
+                                 pt:placeholder="Mot de passe" pt:autofocus=""
+                                 label="Mot de passe" 
+                                 value="#{indexPage.usrPwd}" />
                         </div>
-                        <div class="step">
-                            <div class="step-icon">
-                                <img src="img/stackWhite.svg" />
-                            </div>
-                            <div class="step-text"><a href="http://portal.azure.com">View your service stack in the Azure Portal</a></div>
+                        
+                        <div class="checkbox">
+                           <label for="chkRememberMe">
+                              <input type="checkbox" id="chkRememberMe" value="false" onclick="formLogin.prepCookie();" />
+                              Remember Me!
+                           </label>
                         </div>
-                        <div class="step">
-                            <div class="step-icon">
-                                <img src="img/lightbulbWhite.svg" />
-                            </div>
-                            <div class="step-text"><a href="https://go.microsoft.com/fwlink/?linkid=862126">Learn more about all you can do with Azure projects by visiting the documentation</a></div>
-                        </div>
-                    </div>
-                </div>
+                        <h:commandButton id="cb_login" styleClass="btn btn-success btn-lg btn-block"
+                                 value="Soumettre" 
+                                 action="#{indexPage.login}">
+                           <f:ajax render="@form" execute="@form" />
+                        </h:commandButton>
+                        
+                        <div class="margB" />
+                     </fieldset>
+                     
+                  </div>
+               </div>
             </div>
-        </div>
-    </div>
-</body> 
+         </div>
+      </div>
+      
+	</ui:define>
+   
+	<ui:define name="footer" />
+</ui:composition>
+
+</h:body>
+
 </html>

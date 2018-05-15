@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html	
+	xmlns:f="http://xmlns.jcp.org/jsf/core"	
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:view	contentType="text/html"	encoding="UTF-8">
+	<h:head>
+		<f:facet name="first">
+			<meta charset="utf-8" />
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+			<meta name="viewport" content="width=device-width, initial-scale=1" />
+			<!-- The above 3 meta tags *must* come first in the head; 
+				any	other head content must	come *after* these tags	-->
+			<title>AzureJSF&#160;-&#160;<ui:insert name="title" /></title>
+		</f:facet>
+	
+		<f:facet name="middle">
+			<!-- Bootstrap Core CSS -->
+			<h:outputStylesheet library="bootstrap" name="css/bootstrap.min.css" />
+			<h:outputStylesheet library="bootstrap" name="css/bootstrap-theme.min.css" />
+			<!-- FontAwesome CSS -->
+			<h:outputStylesheet library="font-awesome" name="css/font-awesome.min.css" />
+			<!-- dataTable CSS -->
+			<h:outputStylesheet library="dataTable" name="css/jquery.dataTables.min.css" />
+		</f:facet>
+		
+		<f:facet name="last">
+			<!-- Application CSS -->
+			<h:outputStylesheet library="saq" name="css/style.css" />
+			<!-- PrimeFaces Messages -->
+			<h:outputScript library="saq" name="js/pfMessages.js" />
+			<!-- Application js -->
+			<h:outputScript library="saq" name="js/main.js" />
+		</f:facet>
+	</h:head>
+
+	<h:body>
+		<ui:debug hotkey="x" />
+		<h:form	id="form_main" enctype="#{encType}"	pt:role="form">
+			<div id="container">
+				<ui:insert name="headerContent">
+					<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+						<div class="container-fluid">
+							<div class="navbar-header">
+								<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+									<span class="sr-only">Toggle navigation</span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+								</button>
+								<h:commandLink id="hl_index" action="#{basePage.goToIndex}">
+									<h:graphicImage id="gi_logo" styleClass="headLogoSAQ" library="saq" name="images/logo-saq.png" title="SAQ" alt="SAQ" />
+									<h:outputText styleClass="navbar-brand"	value="&#160;SAQ" title="SAQ" />
+								</h:commandLink>
+							</div>
+							<div class="collapse navbar-collapse">
+								<!-- <ui:insert name="topMenu" /> -->
+								<ul class="nav navbar-nav">
+									<li class="active">
+										<h:commandLink id="hl_home" action="#{basePage.goToHome}">
+										Home
+										</h:commandLink>
+									</li>
+									<li><a href="azureHome.xhtml">azureHome</a></li>
+									<li><a href="expXLS.xhtml">Excel</a></li>
+									<li><a href="pfDataTable.xhtml">PF dtTbl</a></li>
+									<li class="dropdown">
+										<a href="#" class="dropdown-toggle" data-toggle="dropdown">Demo Application <b class="caret"></b></a>
+										<ul class="dropdown-menu">
+											<li><a href="https://github.com/peterpilgrim">Github</a></li>
+											<li class="divider"></li>
+											<li class="nav-header">&#160;<b>Books</b></li>
+											<li><a href="http://www.packtpub.com/java-ee-7-developer-handbook/book">Java EE 7 Developer Handbook</a></li>
+											<li><a href="http://www.amazon.com/Java-EE-7-Developer-Handbook/dp/1849687943/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1380468215&amp;sr=1-1&amp;keywords=java+ee+7+developer+handbook">Amazon USA</a></li>
+											<li><a href="http://www.amazon.co.uk/Java-EE-Developer-Handbook-ebook/dp/B00FDLOF66/ref=sr_1_cc_1?s=aps&amp;ie=UTF8&amp;qid=1380468106&amp;sr=1-1-catcorr&amp;keywords=java+ee+7+developer+handbook">Amazon UK</a></li>
+											<li class="nav-header">&#160;<b>Friends</b></li>
+											<li><a href="http://tlcpowertalk.com/">TLC Powertalk</a></li>
+											<li><a href="https://java-champions.java.net/">Java Champions</a></li>
+											<li><a href="http://www.jfrog.com/home/v_artifactory_opensource_overview">Artifactory</a></li>
+											<li><a href="http://jenkins-ci.org//">Jenkins</a></li>
+										</ul>
+									</li>
+								</ul>
+							</div><!-- /.collapse /.nav-collapse -->
+						</div>
+					</nav>
+				<!-- /header-content -->
+				</ui:insert>
+						
+				<!-- Page Content -->
+				<div class="main-content">
+					<div id="header">
+						<ui:insert name="header">
+							Header area. See comments below this line in the source.
+							<!--  include your header file or uncomment the include below and create header.xhtml in this directory -->
+							<!-- <ui:include src="header.xhtml"/> -->
+						</ui:insert>
+					</div>
+		
+					<div id="content">
+						<ui:insert name="content">
+							Content area. See comments below this line in the source.
+							<!--  include your content file or uncomment the include below and create content.xhtml in this directory -->
+							<!-- <div> -->
+							<!-- <ui:include src="content.xhtml"/> -->
+							<!-- </div> -->
+						</ui:insert>
+					</div>
+		
+					<div id="footer">
+						<ui:insert name="footer">
+							Footer area. See comments below this line in the source.
+							<!--  include your header file or uncomment the include below and create footer.xhtml in this directory -->
+							<!--<ui:include src="footer.xhtml"/>  -->
+						</ui:insert>
+					</div>
+					<!-- <hr class="subfeaturette-divider" /> -->
+				</div>
+				<!-- main-content -->
+		
+				<div class="footer-content"></div>
+				<!-- footer-content -->
+						
+			</div>
+		</h:form>
+		
+		<h:outputScript	library="primefaces" name="jquery/jquery.js" />
+		<h:outputScript	library="bootstrap"	name="js/bootstrap.min.js" />
+		<h:outputScript	library="dataTable"	name="js/jquery.dataTables.min.js" />
+		
+		<ui:insert name="customJS"></ui:insert>
+		
+		<script	type="text/javascript">
+			$(document).ready(formDefault.onReady);
+		</script>
+	</h:body>
+</f:view>
+</html>
