@@ -35,4 +35,8 @@ public class HomePage implements Serializable {
 	public String goToExaCDI() {
         return "exaCDI";
     }
+	
+	public String goToPDF() {
+        return "java2PDF";
+    }
 }
