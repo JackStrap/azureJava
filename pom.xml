@@ -157,11 +157,11 @@
 			<artifactId>xmlworker</artifactId>
 			<version>5.5.13</version>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>
 			<version>6.5.1</version>
-		</dependency>
+		</dependency> -->
 	</dependencies>
 	
 	<!-- Build Maven WAR -->

@@ -1,10 +1,11 @@
 package org.mavenTest.mavenWebApp;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
@@ -12,8 +13,6 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -21,7 +20,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
 
@@ -32,8 +30,8 @@ public class Java2PDF implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
-	//private static final String PDF = "src/main/resources/pdf.pdf";
-	private static final String HTML = "src/main/resources/newFile.html";
+	private static final String FILEPDF = "html2PDF.pdf";
+	private static final String RESTEMP = "newFile.html";
 	
 	private StreamedContent file;
 	
@@ -43,52 +41,59 @@ public class Java2PDF implements Serializable{
 	// ----------------------------
 	@PostConstruct
 	public void pageLoad() {
-		/*
-		try {
-			//generateHTMLFromPDF(PDF);
-			//generatePDFFromHTML(HTML);
-
-		} catch (IOException | ParserConfigurationException | DocumentException e) {
-			e.printStackTrace();
-		}
-		*/
+		
+	}
+	
+	public String goToHtml() {
+		return "newFile.html";
 	}
 	
 	// ----------------------------
 	// Methods
 	// ----------------------------
-	public void createPDF() {
-		try {
-			generatePDFFromHTML(HTML);
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (DocumentException e) {
-			e.printStackTrace();
-		}
-    }
-	
-	private static void generatePDFFromHTML(String filename) 
-			throws ParserConfigurationException, IOException, DocumentException {
-		
-		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-		
-		Document document = new Document();
-		//PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("src/output/html.pdf"));
-		PdfWriter writer = PdfWriter.getInstance(document, ec.getResponseOutputStream());
-		document.open();
-		XMLWorkerHelper.getInstance().parseXHtml(writer, document, new FileInputStream(filename));
-		document.close();
-	}
-	
 	public void produireRapport() {
 		log.debug("produireRapport: rapportInfoEmpAss");
 		
-		String fileName = String.format("Html2Pdf.pdf");
+		try {
+//			String filePDF = String.format("html2Pdf.pdf");
+//			String fileName = "newFile.html";
+			
+			ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+			OutputStream os = ec.getResponseOutputStream();
+			
+			Document document = new Document();
+			
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			PdfWriter.getInstance(document, baos);
+			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(FILEPDF));
+			
+			document.open();
+			
+			//InputStream resFile = this.getClass().getClassLoader().getResourceAsStream(fileName);
+			InputStream resFile = this.getClass().getResourceAsStream(RESTEMP);
+			XMLWorkerHelper.getInstance().parseXHtml(writer, document, new InputStreamReader(resFile));
+			
+			document.close();
 
-		InputStream dataIS = new ByteArrayInputStream(donnees);
-		file = new DefaultStreamedContent(dataIS, "application/pdf", fileName);
+			// those next line are not necessary
+			ec.setResponseContentType("application/pdf");
+			ec.setResponseHeader("Expires", "0");
+			ec.setResponseHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+			ec.setResponseHeader("Pragma", "public");
+			
+			ec.setResponseHeader("Content-Disposition", "attachment; filename=\"" + FILEPDF + "\"");
+			
+			ec.setResponseContentLength(baos.size());
+			
+			baos.writeTo(os);
+			os.flush();
+			os.close();
+			
+			InputStream dataIS = new ByteArrayInputStream(baos.toByteArray());
+			file = new DefaultStreamedContent(dataIS, "application/pdf");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	// ----------------------------

@@ -20,8 +20,16 @@
 		</ui:define>
 		
 		<ui:define name="content">
-			<h:commandButton id="btnPDF" styleClass="btn btn-success btn-lg btn-block" 
-	                        	value="create PDF" action="#{javaPdf.createPDF}" />
+			<h:commandButton id="btnFile" value="check html"  action="#{javaPdf.goToHtml}"
+				styleClass="btn btn-info btn-lg btn-block">
+			</h:commandButton>
+			<p/>
+			<h:commandButton id="btnDown" value="download PDF" ajax="false"
+				styleClass="btn btn-success btn-lg btn-block">
+				<p:fileDownload value="#{javaPdf.file}" />
+			</h:commandButton>
+
+			 <!-- onclick="PrimeFaces.monitorDownload(formRapp.startBui, formRapp.stopBui);" -->
 		</ui:define>
 		
 		<ui:define name="footer" />
