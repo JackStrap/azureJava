@@ -31,7 +31,7 @@ public class Java2PDF implements Serializable{
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	private static final String FILEPDF = "html2PDF.pdf";
-	private static final String RESTEMP = "newFile.html";
+	private static final String RESTEMP = "newFile.xhtml";
 	
 	private StreamedContent file;
 	
@@ -45,7 +45,7 @@ public class Java2PDF implements Serializable{
 	}
 	
 	public String goToHtml() {
-		return "newFile.html";
+		return "newFile";
 	}
 	
 	// ----------------------------
@@ -103,7 +103,7 @@ public class Java2PDF implements Serializable{
 	      try {
 	         this.produireRapport();
 	      } catch (Exception e) {
-	         log.error("Une erreur est survenue dans la génération du rapport. {}", e);
+	         log.error("Une erreur est survenue dans la gï¿½nï¿½ration du rapport. {}", e);
 	      }
 	      return file;
 	   }
