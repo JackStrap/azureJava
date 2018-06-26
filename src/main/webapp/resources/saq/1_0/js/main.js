@@ -11,8 +11,77 @@ formDefault = {
       alert("cookie: " + $("input[name$='chkRememberMe']").is(":checked"));
       //alert("cookie: " + document.getElementById('form_main:chkRememberMe').checked);
       //formCook.setCookie();
-   }
+   },
+
+   callRest:function(n) {
+        //var urlServer = $("input[id$='hidServerUrl']").val();
+        var urlServer = "http://localhost:8080/ROOT/restservice/rest/";
+
+        var strFncSuccess = "wsRelEmp.showAjaxSuccess";
+        //var webMethod = urlServer + "_layouts/SAQ/ReleveEmploi/wsRelEmp.asmx/InfoUser";
+        var webMethod = urlServer + n;
+        this.valToRest = n;
+        var parameters = null;
+
+        wsRelEmp.setAjaxCall(webMethod, parameters, strFncSuccess);
+
+   },
+   valToRest: {}
 };
+
+
+var wsRelEmp = window.wsRelEmp || {};
+wsRelEmp = {
+	setAjaxCall: function (webMethod, parameters, successFnc) {
+        //alert("webMethod: " + webMethod + "\nparameters: " + parameters + "\nsuccessFnc: " + successFnc);
+		try {
+			$.ajax({
+				type: "GET"
+				, url: webMethod
+				, data: JSON.stringify(parameters)
+				, contentType: "application/json; charset=utf-8"
+				, dataType: "json"
+				, success: eval(successFnc)
+				, error: wsRelEmp.showAjaxError
+			});
+		}
+		catch (err) {
+			alert("error: " + err.message);
+		}
+	},
+
+	showAjaxSuccess: function (xData, status, jqXHR) {
+		PF("growlPF").renderMessage({
+			"summary":"Value pass: " + formDefault.valToRest,
+            "detail":"Value return: " + xData,
+            "severity":"info"
+    	});
+        //alert("xData: " + xData);
+	},
+
+	showAjaxSucAdm: function (xData, status, jqXHR) {
+		var dataStatus, dataMsg;
+		dataStatus = xData.d[0].Status;
+		dataMsg = xData.d[0].Msg;
+
+		$("#spMsg").text(dataMsg).fadeIn(800).delay(3600).fadeOut(1200);
+	},
+
+	showAjaxError: function (jqXHR, textStatus, errorThrown) {
+		var sErrMsg = errorThrown;
+        //var jqXHRerr = JSON.parse(jqXHR.responseText);
+        var jqXHRerr = jqXHR.responseText;
+		for (var keyVal in jqXHRerr) {
+			if (jqXHRerr.hasOwnProperty(keyVal)) {
+				if (jqXHRerr[keyVal] != "") {
+					sErrMsg += " - " + jqXHRerr[keyVal];
+				}
+			}
+        }
+        alert(sErrMsg);
+		//formUtils.showError(sErrMsg);
+	}
+}
 
 
 var expXLS = window.expXLS || {};

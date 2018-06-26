@@ -14,12 +14,14 @@
 	<ui:composition template="/WEB-INF/templates/base.xhtml">
 		
 		<ui:define name="title">AzureJSF-Home</ui:define>
-	
+
 		<ui:define name="header">
 		    <h3>header - Home Page</h3>
 		</ui:define>
 		
 		<ui:define name="content">
+			<p:growl id="growl" widgetVar="growlPF" showDetail="true" sticky="true" />
+			<!-- <a href="http://localhost:8080/ROOT/restservice/rest/1452">call REST</a> -->
 			<div class="row">
 				<div class="col-md-4"></div>
 				<div class="col-md-4">
@@ -82,7 +84,28 @@
 				</div>
 				<div class="col-md-4"></div>
 			</div>
-			
+			<div class="clearfix">&#160;</div>
+			<div class="row">
+				<div class="col-md-4"></div>
+				<div class="col-md-4">
+					<input type="button" id="btnAjax" class="btn btn-success btn-lg btn-block" 
+							value="Ajax" onclick="PF('dlg').show()" />
+					<!-- <input type="button" id="btnAjax" class="btn btn-success btn-lg btn-block" 
+							value="Ajax" onclick="formDefault.callRest('14682')" /> -->
+					<!-- <h:commandButton id="btnAJAX" styleClass="btn btn-success btn-lg btn-block" 
+	                        	value="Ajax" onclick="formDefault.callRest('14682')" /> -->
+				</div>
+				<div class="col-md-4"></div>
+			</div>
+			<p:dialog id="dialog" header="Give me a number" modal="true" widgetVar="dlg" >
+			    <h:form>
+			       <h:panelGrid columns="2" cellpadding="5">
+			           <h:outputLabel for="reason" value="Give me a number :" />
+			           <p:inputText id="reason" widgetVar="restValue" required="true" label="reason" value="12345" />
+			               <p:commandButton id="provideReason" value="Ok" onclick="PF('dlg').hide();formDefault.callRest(PF('restValue').jq.val())" />  
+			       </h:panelGrid>  
+			    </h:form>  
+			</p:dialog>
 		</ui:define>
 		
 		<ui:define name="footer" />

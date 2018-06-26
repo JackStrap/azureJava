@@ -33,6 +33,11 @@
 			<h:outputScript library="saq" name="js/pfMessages.js" />
 			<!-- Application js -->
 			<h:outputScript library="saq" name="js/main.js" />
+			<!-- SAQ metatag -->
+			<meta name="tomcatVer" content="#{application.getServerInfo()}" />
+			<meta name="ServletVer" content="#{application.getMajorVersion()}.#{application.getMinorVersion()}" />
+			<!-- <meta name="jvmVer" content="#{JspFactory.getDefaultFactory().getEngineInfo().getSpecificationVersion()}" />
+			<meta name="javaVer" content='#{ System.getProperty("java.version") }' /> -->
 		</f:facet>
 	</h:head>
 
