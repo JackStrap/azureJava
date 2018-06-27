@@ -90,21 +90,23 @@
 				<div class="col-md-4">
 					<input type="button" id="btnAjax" class="btn btn-success btn-lg btn-block" 
 							value="Ajax" onclick="PF('dlg').show()" />
+					
+					<!-- <h:inputText id="hidServerUrl" value="#{homePage.baseUrl}" style="width:420px" /> -->
+					<h:inputHidden id="hidServerUrl" value="#{homePage.baseUrl}" />
+ 					
 					<!-- <input type="button" id="btnAjax" class="btn btn-success btn-lg btn-block" 
-							value="Ajax" onclick="formDefault.callRest('14682')" /> -->
-					<!-- <h:commandButton id="btnAJAX" styleClass="btn btn-success btn-lg btn-block" 
+							value="Ajax" onclick="formDefault.callRest('14682')" /> 
+					<h:commandButton id="btnAJAX" styleClass="btn btn-success btn-lg btn-block" 
 	                        	value="Ajax" onclick="formDefault.callRest('14682')" /> -->
 				</div>
 				<div class="col-md-4"></div>
 			</div>
 			<p:dialog id="dialog" header="Give me a number" modal="true" widgetVar="dlg" >
-			    <h:form>
-			       <h:panelGrid columns="2" cellpadding="5">
-			           <h:outputLabel for="reason" value="Give me a number :" />
-			           <p:inputText id="reason" widgetVar="restValue" required="true" label="reason" value="12345" />
-			               <p:commandButton id="provideReason" value="Ok" onclick="PF('dlg').hide();formDefault.callRest(PF('restValue').jq.val())" />  
-			       </h:panelGrid>  
-			    </h:form>  
+				<h:panelGrid columns="2" cellpadding="5">
+					<h:outputLabel for="aNumber" value="Give me a number :" />
+					<p:inputText id="aNumber" widgetVar="diagVal" required="true" label="aNumber" />
+					<p:commandButton id="provideNumber" value="Ok" onclick="PF('dlg').hide();formDefault.callRest(PF('diagVal').jq.val())" />  
+				</h:panelGrid>
 			</p:dialog>
 		</ui:define>
 		
